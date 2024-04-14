@@ -2,6 +2,8 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLineEdit, QPushB
 from matrix import Matrix
 from matrix_calculator import MatrixOperations
 
+from utils import is_float
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -56,8 +58,11 @@ class MainWindow(QMainWindow):
         self.division_button.clicked.connect(self.action_divide_matrix)
 
     def generate_matrices(self):
-        rows = int(self.rows_input.text())
-        cols = int(self.cols_input.text())
+        rows_text = self.rows_input.text()
+        columns_text = self.cols_input.text()
+        self.validate_inputs(rows_text, columns_text)
+        rows = int(rows_text)
+        cols = int(columns_text)
         self.matrix_a = Matrix(rows, cols)
         self.matrix_b = Matrix(rows, cols)
         self.result_label.setText(str(self.matrix_a) + "\n\n" + str(self.matrix_b))
@@ -78,3 +83,14 @@ class MainWindow(QMainWindow):
         self.matrix_result = MatrixOperations.divide(self.matrix_a, self.matrix_b)
         self.operations_result_label.setText(str(self.matri))
 
+    def validate_inputs(self, rows_text, columns_text):
+        if not rows_text or not columns_text:
+            self.show_error("La cantidad de filas y la cantidad de columnas son obligatorias!")
+        if rows_text.isalpha():
+            self.show_error("La cantidad de filas no puede ser una letra, solo numeros enteros positivos!")
+        if columns_text.isalpha():
+            self.show_error("La cantidad de columnas no puede ser una letra, solo numeros enteros positivos!")
+        if is_float(rows_text):
+            self.show_error("La cantidad de filas no puede ser flotante, solo numeros enteros positivos!")
+        if is_float(columns_text):
+            self.show_error("La cantidad de columnas no puede ser flotante, solo numeros enteros positivos!")
