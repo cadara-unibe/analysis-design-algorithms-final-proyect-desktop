@@ -72,19 +72,19 @@ class MainWindow(QMainWindow):
 
     def action_add_matrix(self):
         self.matrix_result = MatrixOperations.add(self.matrix_a, self.matrix_b)
-        self.operations_result_label.setText(str(self.matri))
+        self.operations_result_label.setText(str(self.matrix_result))
 
     def action_substract_matrix(self):
         self.matrix_result = MatrixOperations.subtract(self.matrix_a, self.matrix_b)
-        self.operations_result_label.setText(str(self.matri))
+        self.operations_result_label.setText(str(self.matrix_result))
 
     def action_multiply_matrix(self):
         self.matrix_result = MatrixOperations.multiply(self.matrix_a, self.matrix_b)
-        self.operations_result_label.setText(str(self.matri))
+        self.operations_result_label.setText(str(self.matrix_result))
 
     def action_divide_matrix(self):
         self.matrix_result = MatrixOperations.divide(self.matrix_a, self.matrix_b)
-        self.operations_result_label.setText(str(self.matri))
+        self.operations_result_label.setText(str(self.matrix_result))
 
     def validate_inputs(self, rows_text, columns_text):
         validation_result = False
