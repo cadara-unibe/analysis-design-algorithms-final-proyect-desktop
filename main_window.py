@@ -12,9 +12,14 @@ class MainWindow(QMainWindow):
 
         layout = QVBoxLayout()
 
+        self.rows_label = QLabel("Cantidad de Filas")
+        layout.addWidget(self.rows_label)
         self.rows_input = QLineEdit()
-        self.cols_input = QLineEdit()
         layout.addWidget(self.rows_input)
+        
+        self.columns_label = QLabel("Cantidad de Columnas")
+        layout.addWidget(self.columns_label)
+        self.cols_input = QLineEdit()
         layout.addWidget(self.cols_input)
 
         self.generate_button = QPushButton("Generar Matrices")
