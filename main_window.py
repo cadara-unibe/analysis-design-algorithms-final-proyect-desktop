@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLineEdit, QPushB
 from matrix import Matrix
 from matrix_calculator import MatrixOperations
 
-from utils import is_float
+from utils import is_float, show_error
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -60,7 +60,10 @@ class MainWindow(QMainWindow):
     def generate_matrices(self):
         rows_text = self.rows_input.text()
         columns_text = self.cols_input.text()
-        self.validate_inputs(rows_text, columns_text)
+        if not self.validate_inputs(rows_text, columns_text):
+            self.rows_input.clear()
+            self.cols_input.clear()
+            return
         rows = int(rows_text)
         cols = int(columns_text)
         self.matrix_a = Matrix(rows, cols)
@@ -84,13 +87,19 @@ class MainWindow(QMainWindow):
         self.operations_result_label.setText(str(self.matri))
 
     def validate_inputs(self, rows_text, columns_text):
+        validation_result = False
         if not rows_text or not columns_text:
-            self.show_error("La cantidad de filas y la cantidad de columnas son obligatorias!")
-        if rows_text.isalpha():
-            self.show_error("La cantidad de filas no puede ser una letra, solo numeros enteros positivos!")
-        if columns_text.isalpha():
-            self.show_error("La cantidad de columnas no puede ser una letra, solo numeros enteros positivos!")
-        if is_float(rows_text):
-            self.show_error("La cantidad de filas no puede ser flotante, solo numeros enteros positivos!")
-        if is_float(columns_text):
-            self.show_error("La cantidad de columnas no puede ser flotante, solo numeros enteros positivos!")
+            show_error("La cantidad de filas y la cantidad de columnas son obligatorias!")
+        elif rows_text.isalpha():
+            show_error("La cantidad de filas no puede ser una letra, solo numeros enteros positivos!")
+        elif columns_text.isalpha():
+            show_error("La cantidad de columnas no puede ser una letra, solo numeros enteros positivos!")
+        elif is_float(rows_text):
+            show_error("La cantidad de filas no puede ser flotante, solo numeros enteros positivos!")
+        elif is_float(columns_text):
+            show_error("La cantidad de columnas no puede ser flotante, solo numeros enteros positivos!")
+        else:
+            validation_result = True
+        return validation_result
+
+

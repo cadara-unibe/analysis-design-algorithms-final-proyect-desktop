@@ -2,12 +2,12 @@ from PyQt5.QtWidgets import QMessageBox
 
 def is_float(text):
     try:
-        float(text)
-        return True
+         value = int(text)
+         return False
     except ValueError:
-        return False
+         return True
     
-def show_error(self, error_message):
+def show_error(error_message):
         error_box = QMessageBox()
         error_box.setWindowTitle("Error")
         error_box.setIcon(QMessageBox.Critical)
